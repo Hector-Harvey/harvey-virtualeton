@@ -1,8 +1,8 @@
-sprites.onDestroyed(SpriteKind.Player, function (sprite) {
-	
+sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
+    info.changeScoreBy(1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    magic_gem.destroy()
+    magic_gem.destroy(effects.fire, 1000)
 })
 let magic_gem: Sprite = null
 scene.setBackgroundColor(8)
@@ -45,10 +45,26 @@ let me = sprites.create(img`
 magic_gem.setPosition(20, 60)
 me.setPosition(120, 60)
 info.setScore(0)
+magic_gem = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . c c c . . . . . . 
+    . . . . . . a b a a . . . . . . 
+    . . . . . c b a f c a c . . . . 
+    . . . . c b b b f f a c c . . . 
+    . . . . b b f a b b a a c . . . 
+    . . . . c b f f b a f c a . . . 
+    . . . . . c a a c b b a . . . . 
+    . . . . . . c c c c . . . . . . 
+    . . . . . . . c . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Player)
+magic_gem.setPosition(randint(15, 145), randint(15, 105))
 game.onUpdate(function () {
     me.x += controller.dx()
     me.y += controller.dy()
-})
-forever(function () {
-    info.changeScoreBy(1)
 })
