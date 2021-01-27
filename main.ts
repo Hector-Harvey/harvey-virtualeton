@@ -2,11 +2,11 @@ sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     info.changeScoreBy(1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    magic_gem.destroy(effects.fire, 1000)
+    otherSprite.destroy(effects.fire, 1000)
+    info.startCountdown(3)
 })
-let magic_gem: Sprite = null
 scene.setBackgroundColor(8)
-magic_gem = sprites.create(img`
+let magic_gem = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -62,9 +62,12 @@ magic_gem = sprites.create(img`
     . . . . . . . c . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
+    `, SpriteKind.Enemy)
 magic_gem.setPosition(randint(15, 145), randint(15, 105))
 game.onUpdate(function () {
     me.x += controller.dx()
     me.y += controller.dy()
+})
+forever(function () {
+    magic_gem.setPosition(randint(10, 160), randint(10, 120))
 })
